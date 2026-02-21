@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: quarantine_transactions
+    description: >
+      Tier 2 data quality rejects. Records with serious issues that should not
+      appear in fact_transactions. Each record includes a rejection_reason.
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: rejection_reason
+        description: Why this record was quarantined
+        tests:
+          - not_null

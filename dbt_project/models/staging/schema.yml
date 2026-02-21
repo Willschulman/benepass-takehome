@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: stg_employees
+    description: Cleaned employee data with normalized dates
+    columns:
+      - name: employee_id
+        description: Unique employee identifier
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        tests:
+          - not_null
+      - name: last_name
+        tests:
+          - not_null
+      - name: email
+        description: Employee email (PII-masked in non-dev environments)
+        meta:
+          pii: true
+      - name: hire_date
+        description: Hire date cast to DATE type
+        tests:
+          - not_null
+      - name: status
+        description: Employment status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["active", "terminated"]
+      - name: is_terminated
+        description: Boolean flag for terminated employees
+
+  - name: stg_benefit_accounts
+    description: Cleaned benefit account data with validated types
+    columns:
+      - name: benefit_account_id
+        tests:
+          - unique
+          - not_null
+      - name: employee_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_employees')
+              field: employee_id
+      - name: benefit_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["wellness", "wfh", "meals", "learning"]
+      - name: monthly_allowance
+        tests:
+          - not_null
+      - name: current_balance
+        tests:
+          - not_null
+
+  - name: stg_transactions
+    description: Cleaned transaction data — 1:1 with raw source, no joins
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: employee_id
+        tests:
+          - not_null
+      - name: benefit_account_id
+        tests:
+          - not_null
+      - name: amount
+        tests:
+          - not_null
+      - name: transaction_timestamp
+        tests:
+          - not_null
+      - name: category
+        tests:
+          - not_null

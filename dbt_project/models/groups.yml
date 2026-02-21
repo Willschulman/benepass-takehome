@@ -1,0 +1,12 @@
+version: 2
+
+groups:
+  - name: bronze
+    owner:
+      name: data-engineering
+  - name: silver
+    owner:
+      name: data-engineering
+  - name: gold
+    owner:
+      name: data-engineering

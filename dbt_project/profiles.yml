@@ -1,0 +1,9 @@
+benepass:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/benepass.duckdb
+    test:
+      type: duckdb
+      path: ../data/benepass_test.duckdb

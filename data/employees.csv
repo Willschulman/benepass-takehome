@@ -1,0 +1,5 @@
+employee_id,first_name,last_name,email,hire_date,status
+E001,Alice,Nguyen,alice.nguyen@example.com,2021-03-15,active
+E002,Brian,Lopez,brian.lopez@example.com,2020-11-02,active
+E003,Carla,Rivera,carla.rivera@example.com,2022-07-10,active
+E004,David,Chen,david.chen@example.com,2023-01-05,terminated

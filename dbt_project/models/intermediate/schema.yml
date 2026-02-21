@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: int_transactions_enriched
+    description: >
+      Transactions enriched with employee and benefit account metadata.
+      Joins stg_transactions with stg_benefit_accounts and stg_employees.
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: employee_id
+        tests:
+          - not_null
+      - name: benefit_account_id
+        tests:
+          - not_null
+      - name: amount
+        tests:
+          - not_null
+      - name: transaction_timestamp
+        tests:
+          - not_null
+      - name: benefit_type
+        description: Benefit type from the associated account (null if account not found)
+      - name: employee_status
+        description: Employment status (null if employee not found)
+      - name: account_employee_id
+        description: Employee ID on the benefit account — used for cross-employee detection
