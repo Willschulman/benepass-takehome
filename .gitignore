@@ -201,7 +201,18 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# DuckDB
+*.duckdb
+*.duckdb.wal
+
+# dbt
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/
+dbt_project/.user.yml
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+45f7e42a-4d0b-47ef-b7b3-cf0558026cc4_Data_Engineering_Take_Home_Challenge (2) (1).pdf

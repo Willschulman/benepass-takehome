@@ -1,0 +1,35 @@
+name: benepass
+version: "1.0.0"
+config-version: 2
+
+profile: benepass
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  pii_masking_enabled: true
+
+seeds:
+  benepass:
+    +schema: bronze
+    +group: bronze
+
+models:
+  benepass:
+    staging:
+      +schema: bronze
+      +group: bronze
+    intermediate:
+      +schema: silver
+      +group: silver
+    quality:
+      +schema: silver
+      +group: silver
+    marts:
+      +schema: gold
+      +group: gold

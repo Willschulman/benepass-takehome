@@ -1,0 +1,14 @@
+version: 2
+
+seeds:
+  - name: category_benefit_mappings
+    description: Valid category-to-benefit-type mappings for DQ flagging
+    columns:
+      - name: benefit_type
+        description: Benefit type identifier
+        tests:
+          - not_null
+      - name: valid_category
+        description: Transaction category considered valid for this benefit type
+        tests:
+          - not_null

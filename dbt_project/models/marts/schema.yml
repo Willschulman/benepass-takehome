@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: fact_transactions
+    description: >
+      Clean, analytics-ready transaction records. Excludes quarantined records.
+      Includes dq_flags array for Tier 1 warnings that don't warrant rejection.
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: employee_id
+        tests:
+          - not_null
+      - name: benefit_account_id
+        tests:
+          - not_null
+      - name: amount
+        description: Transaction amount (always positive in fact table)
+        tests:
+          - not_null
+      - name: dq_flags
+        description: >
+          Array of Tier 1 data quality flags. Empty array = clean record.
+          Possible values: category_mismatch

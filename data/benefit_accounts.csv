@@ -1,0 +1,6 @@
+benefit_account_id,employee_id,benefit_type,program_name,monthly_allowance,current_balance
+BA1001,E001,wellness,Wellness Stipend,100,42.50
+BA1002,E001,wfh,Remote Work Allowance,150,150.00
+BA1003,E002,meals,Meals Program,200,87.25
+BA1004,E003,wellness,Wellness Stipend,100,100.00
+BA1005,E003,learning,Learning & Development,500,500.00

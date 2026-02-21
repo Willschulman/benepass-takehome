@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: Raw CSV data ingested by Dagster into the raw schema
+    tables:
+      - name: employees
+        description: Employee master data
+      - name: benefit_accounts
+        description: Benefit account assignments
+      - name: transactions
+        description: Benefit transaction records

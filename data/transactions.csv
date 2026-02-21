@@ -1,0 +1,8 @@
+transaction_id,employee_id,benefit_account_id,merchant,amount,timestamp,category
+T90001,E001,BA1001,Planet Fitness,35.00,2024-01-14T12:45:13Z,gym
+T90002,E001,BA1002,Amazon,89.99,2024-01-16T09:12:05Z,office_supplies
+T90003,E002,BA1003,Chipotle,14.85,2024-01-04T18:32:10Z,food
+T90004,E003,BA1005,Udemy,79.99,2024-01-20T07:45:00Z,education
+T90005,E003,BA1001,Whole Foods,42.50,2024-01-22T14:10:34Z,groceries
+T90006,E004,BA1004,Lifetime Fitness,90.00,2024-01-08T10:15:54Z,gym
+T90007,E001,BA1002,Home Depot,-25.00,2024-01-18T11:02:22Z,office_supplies
