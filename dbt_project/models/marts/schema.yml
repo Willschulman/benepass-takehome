@@ -24,3 +24,52 @@ models:
         description: >
           Array of Tier 1 data quality flags. Empty array = clean record.
           Possible values: category_mismatch
+
+  - name: dim_merchants
+    description: Distinct merchants with their most common transaction category
+    columns:
+      - name: merchant
+        tests:
+          - unique
+          - not_null
+      - name: primary_category
+        tests:
+          - not_null
+      - name: transaction_count
+        tests:
+          - not_null
+
+  - name: dim_benefit_programs
+    description: Distinct benefit programs with allowance amounts
+    columns:
+      - name: benefit_type
+        tests:
+          - not_null
+      - name: program_name
+        tests:
+          - not_null
+      - name: monthly_allowance
+        tests:
+          - not_null
+    tests:
+      - unique:
+          column_name: "benefit_type || '|' || program_name"
+
+  - name: dim_employees
+    description: Employee dimension with tenure calculation
+    columns:
+      - name: employee_id
+        tests:
+          - unique
+          - not_null
+      - name: hire_date
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["active", "terminated"]
+      - name: tenure_days
+        tests:
+          - not_null
