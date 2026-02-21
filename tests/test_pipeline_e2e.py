@@ -68,3 +68,30 @@ def test_intermediate_enriches_all_transactions(db):
     """Intermediate layer enriches all 7 transactions with employee/account data."""
     count = db.execute("SELECT count(*) FROM silver.int_transactions_enriched").fetchone()[0]
     assert count == 7
+
+
+def test_dim_employees_has_all_employees(db):
+    """Dimension table has all 4 employees."""
+    count = db.execute("SELECT count(*) FROM gold.dim_employees").fetchone()[0]
+    assert count == 4
+
+
+def test_dim_employees_tenure_is_positive(db):
+    """All employees have positive tenure days."""
+    negative = db.execute(
+        "SELECT count(*) FROM gold.dim_employees WHERE tenure_days < 0"
+    ).fetchone()[0]
+    assert negative == 0
+
+
+def test_dim_benefit_programs_has_distinct_programs(db):
+    """Dimension table has 4 distinct benefit programs."""
+    count = db.execute("SELECT count(*) FROM gold.dim_benefit_programs").fetchone()[0]
+    assert count == 4
+
+
+def test_dim_merchants_has_distinct_merchants(db):
+    """Dimension table has one row per merchant."""
+    merchants = db.execute("SELECT merchant FROM gold.dim_merchants ORDER BY merchant").fetchall()
+    merchant_names = [r[0] for r in merchants]
+    assert len(merchant_names) == len(set(merchant_names))
