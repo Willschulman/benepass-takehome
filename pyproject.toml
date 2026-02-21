@@ -1,0 +1,32 @@
+[project]
+name = "benepass-takehome"
+version = "0.1.0"
+description = "Benepass Data Engineering Take-Home: ELT pipeline with Dagster + dbt + DuckDB"
+requires-python = ">=3.13"
+dependencies = [
+    "dagster",
+    "dagster-webserver",
+    "dagster-dbt",
+    "dbt-duckdb",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["dagster_project*"]
+
+[tool.dagster]
+module_name = "dagster_project.definitions"
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
