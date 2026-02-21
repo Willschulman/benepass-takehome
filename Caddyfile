@@ -1,3 +1,13 @@
-{$DOMAIN:localhost} {
+dagster.benepass.wschulman.com {
+    basicauth * {
+        benepass $2a$14$X2NMv/ZCJasDE69zHDdzOOdgDCbPH9Ql1S/aGbDbZHRkH3.DONPPO
+    }
     reverse_proxy dagster:3000
+}
+
+benepass.wschulman.com {
+    basicauth * {
+        benepass $2a$14$X2NMv/ZCJasDE69zHDdzOOdgDCbPH9Ql1S/aGbDbZHRkH3.DONPPO
+    }
+    respond "Dashboard coming soon" 200
 }
