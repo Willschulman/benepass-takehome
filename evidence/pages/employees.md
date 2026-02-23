@@ -1,6 +1,5 @@
 ---
 title: Employees
-queries: hide
 ---
 
 ```sql active_count
