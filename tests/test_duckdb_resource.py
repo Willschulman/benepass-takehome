@@ -1,6 +1,3 @@
-from dagster_project.resources.duckdb import DuckDBResource
-
-
 def test_get_connection(duckdb_resource):
     """Resource returns a usable DuckDB connection."""
     conn = duckdb_resource.get_connection()
