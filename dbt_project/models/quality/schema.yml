@@ -7,10 +7,25 @@ models:
       appear in fact_transactions. Each record includes a rejection_reason.
     columns:
       - name: transaction_id
+        description: Unique transaction identifier
+        meta:
+          domain: quality
         tests:
           - unique
           - not_null
       - name: rejection_reason
-        description: Why this record was quarantined
+        description: >
+          Why this record was quarantined. Values: negative_amount,
+          terminated_employee, invalid_employee_id, invalid_benefit_account_id,
+          cross_employee_account_usage
+        meta:
+          domain: quality
         tests:
           - not_null
+          - accepted_values:
+              values:
+                - negative_amount
+                - terminated_employee
+                - invalid_employee_id
+                - invalid_benefit_account_id
+                - cross_employee_account_usage

@@ -6,54 +6,90 @@ models:
     columns:
       - name: employee_id
         description: Unique employee identifier
+        meta:
+          domain: people
         tests:
           - unique
           - not_null
       - name: first_name
+        description: Employee first name
+        meta:
+          domain: people
+          pii: true
         tests:
           - not_null
       - name: last_name
+        description: Employee last name
+        meta:
+          domain: people
+          pii: true
         tests:
           - not_null
       - name: email
         description: Employee email (PII-masked in non-dev environments)
         meta:
+          domain: people
           pii: true
       - name: hire_date
         description: Hire date cast to DATE type
+        meta:
+          domain: people
         tests:
           - not_null
       - name: status
-        description: Employment status
+        description: Employment status (active or terminated)
+        meta:
+          domain: people
         tests:
           - not_null
           - accepted_values:
               values: ["active", "terminated"]
       - name: is_terminated
-        description: Boolean flag for terminated employees
+        description: Boolean flag derived from status = terminated
+        meta:
+          domain: people
 
   - name: stg_benefit_accounts
     description: Cleaned benefit account data with validated types
     columns:
       - name: benefit_account_id
+        description: Unique benefit account identifier
+        meta:
+          domain: benefits
         tests:
           - unique
           - not_null
       - name: employee_id
+        description: Employee who owns this benefit account
+        meta:
+          domain: people
         tests:
           - not_null
           - relationships:
               to: ref('stg_employees')
               field: employee_id
       - name: benefit_type
+        description: Type of benefit (wellness, wfh, meals, learning)
+        meta:
+          domain: benefits
         tests:
           - not_null
           - accepted_values:
               values: ["wellness", "wfh", "meals", "learning"]
+      - name: program_name
+        description: Display name of the benefit program
+        meta:
+          domain: benefits
       - name: monthly_allowance
+        description: Monthly dollar allowance for this benefit
+        meta:
+          domain: benefits
         tests:
           - not_null
       - name: current_balance
+        description: Remaining balance on the benefit account
+        meta:
+          domain: benefits
         tests:
           - not_null
 
@@ -61,21 +97,43 @@ models:
     description: Cleaned transaction data — 1:1 with raw source, no joins
     columns:
       - name: transaction_id
+        description: Unique transaction identifier
+        meta:
+          domain: benefits
         tests:
           - unique
           - not_null
       - name: employee_id
+        description: Employee who made the transaction
+        meta:
+          domain: people
         tests:
           - not_null
       - name: benefit_account_id
+        description: Benefit account charged
+        meta:
+          domain: benefits
         tests:
           - not_null
+      - name: merchant
+        description: Merchant name where transaction occurred
+        meta:
+          domain: benefits
       - name: amount
+        description: Transaction amount in dollars
+        meta:
+          domain: benefits
         tests:
           - not_null
       - name: transaction_timestamp
+        description: Transaction timestamp normalized to UTC
+        meta:
+          domain: benefits
         tests:
           - not_null
       - name: category
+        description: Merchant category (lowercased)
+        meta:
+          domain: benefits
         tests:
           - not_null

@@ -13,6 +13,8 @@ COPY dagster_project/ dagster_project/
 COPY dbt_project/ dbt_project/
 COPY data/ data/
 
+RUN cd dbt_project && uv run dbt docs generate
+
 EXPOSE 3000
 
 CMD ["uv", "run", "dagster", "dev", "-h", "0.0.0.0", "-p", "3000"]

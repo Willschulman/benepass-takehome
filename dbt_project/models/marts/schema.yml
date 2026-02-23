@@ -7,35 +7,104 @@ models:
       Includes dq_flags array for Tier 1 warnings that don't warrant rejection.
     columns:
       - name: transaction_id
+        description: Unique transaction identifier
+        meta:
+          domain: benefits
         tests:
           - unique
           - not_null
       - name: employee_id
+        description: Employee who made the transaction
+        meta:
+          domain: people
         tests:
           - not_null
       - name: benefit_account_id
+        description: Benefit account charged
+        meta:
+          domain: benefits
         tests:
           - not_null
+      - name: merchant
+        description: Merchant name
+        meta:
+          domain: benefits
       - name: amount
-        description: Transaction amount (always positive in fact table)
+        description: Transaction amount (always positive — negatives are quarantined)
+        meta:
+          domain: benefits
         tests:
           - not_null
+      - name: transaction_timestamp
+        description: Transaction timestamp normalized to UTC
+        meta:
+          domain: benefits
+      - name: category
+        description: Merchant category
+        meta:
+          domain: benefits
+      - name: benefit_type
+        description: Benefit type from associated account
+        meta:
+          domain: benefits
+      - name: program_name
+        description: Benefit program display name
+        meta:
+          domain: benefits
       - name: dq_flags
         description: >
           Array of Tier 1 data quality flags. Empty array = clean record.
           Possible values: category_mismatch
+        meta:
+          domain: quality
 
-  - name: dim_merchants
-    description: Distinct merchants with their most common transaction category
+  - name: dim_employees
+    description: Employee dimension with tenure calculation
     columns:
-      - name: merchant
+      - name: employee_id
+        description: Unique employee identifier
+        meta:
+          domain: people
         tests:
           - unique
           - not_null
-      - name: primary_category
+      - name: first_name
+        description: Employee first name
+        meta:
+          domain: people
+          pii: true
+      - name: last_name
+        description: Employee last name
+        meta:
+          domain: people
+          pii: true
+      - name: email
+        description: Employee email (PII-masked in non-dev environments)
+        meta:
+          domain: people
+          pii: true
+      - name: hire_date
+        description: Date employee was hired
+        meta:
+          domain: people
         tests:
           - not_null
-      - name: transaction_count
+      - name: status
+        description: Employment status (active or terminated)
+        meta:
+          domain: people
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["active", "terminated"]
+      - name: is_terminated
+        description: Boolean flag derived from status
+        meta:
+          domain: people
+      - name: tenure_days
+        description: Days since hire date
+        meta:
+          domain: people
         tests:
           - not_null
 
@@ -43,33 +112,46 @@ models:
     description: Distinct benefit programs with allowance amounts
     columns:
       - name: benefit_type
+        description: Type of benefit (wellness, wfh, meals, learning)
+        meta:
+          domain: benefits
         tests:
           - not_null
       - name: program_name
+        description: Benefit program display name
+        meta:
+          domain: benefits
         tests:
           - not_null
       - name: monthly_allowance
+        description: Monthly dollar allowance for this program
+        meta:
+          domain: benefits
         tests:
           - not_null
     tests:
       - unique:
           column_name: "benefit_type || '|' || program_name"
 
-  - name: dim_employees
-    description: Employee dimension with tenure calculation
+  - name: dim_merchants
+    description: Distinct merchants with their most common transaction category
     columns:
-      - name: employee_id
+      - name: merchant
+        description: Merchant name
+        meta:
+          domain: benefits
         tests:
           - unique
           - not_null
-      - name: hire_date
+      - name: primary_category
+        description: Most frequent transaction category for this merchant
+        meta:
+          domain: benefits
         tests:
           - not_null
-      - name: status
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["active", "terminated"]
-      - name: tenure_days
+      - name: transaction_count
+        description: Total number of transactions at this merchant
+        meta:
+          domain: benefits
         tests:
           - not_null

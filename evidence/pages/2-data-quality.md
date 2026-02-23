@@ -33,16 +33,6 @@ order by record_count desc
 
 <BarChart data={quarantine_by_reason} x=rejection_reason y=record_count title="Quarantined Records by Reason" />
 
-## DQ Flags on Clean Records
-
-```sql flagged_count
-select count(*) as flagged_records
-from benepass.fact_transactions
-where len(dq_flags) > 0
-```
-
-<BigValue data={flagged_count} value=flagged_records title="Records with DQ Flags" />
-
 ## Quarantined Records Detail
 
 ```sql quarantine_detail
@@ -57,3 +47,31 @@ order by transaction_id
 ```
 
 <DataTable data={quarantine_detail} />
+
+## Tier 1 Warnings
+
+Records with potential data quality warnings but not serious enough to quarantine.
+
+```sql flagged_count
+select count(*) as flagged_records
+from benepass.fact_transactions
+where len(dq_flags) > 0
+```
+
+<BigValue data={flagged_count} value=flagged_records title="Flagged Records" />
+
+```sql flagged_records
+select
+    transaction_id,
+    employee_id,
+    merchant,
+    amount,
+    category,
+    benefit_type,
+    dq_flags
+from benepass.fact_transactions
+where len(dq_flags) > 0
+order by transaction_id
+```
+
+<DataTable data={flagged_records} />

@@ -1,3 +1,11 @@
+docs.benepass.wschulman.com {
+    basicauth * {
+        benepass $2a$14$X2NMv/ZCJasDE69zHDdzOOdgDCbPH9Ql1S/aGbDbZHRkH3.DONPPO
+    }
+    root * /srv/dbt-docs
+    file_server
+}
+
 dagster.benepass.wschulman.com {
     basicauth * {
         benepass $2a$14$X2NMv/ZCJasDE69zHDdzOOdgDCbPH9Ql1S/aGbDbZHRkH3.DONPPO
