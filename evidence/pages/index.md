@@ -1,5 +1,6 @@
 ---
 title: Benefits Overview
+queries: hide
 ---
 
 ```sql total_transactions
