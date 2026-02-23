@@ -1,6 +1,5 @@
 ---
 title: Data Quality
-queries: hide
 ---
 
 ```sql clean_count
