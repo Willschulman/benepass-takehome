@@ -9,5 +9,7 @@ benepass.wschulman.com {
     basicauth * {
         benepass $2a$14$X2NMv/ZCJasDE69zHDdzOOdgDCbPH9Ql1S/aGbDbZHRkH3.DONPPO
     }
-    reverse_proxy evidence:3000
+    reverse_proxy evidence:3000 {
+        header_up Host localhost
+    }
 }
