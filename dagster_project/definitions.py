@@ -3,6 +3,7 @@ from dagster_dbt import DbtCliResource
 
 from dagster_project.assets.dbt import benepass_dbt_assets, dbt_project
 from dagster_project.assets.ingestion import benefit_accounts, employees, transactions
+from dagster_project.checks.data_quality import dq_flags_check, quarantine_records_check
 from dagster_project.checks.schema_drift import (
     benefit_accounts_extra_columns_check,
     benefit_accounts_schema_check,
@@ -28,6 +29,8 @@ defs = Definitions(
         benefit_accounts_extra_columns_check,
         transactions_schema_check,
         transactions_extra_columns_check,
+        quarantine_records_check,
+        dq_flags_check,
     ],
     resources={
         "duckdb": DuckDBResource(db_path=DUCKDB_PATH),

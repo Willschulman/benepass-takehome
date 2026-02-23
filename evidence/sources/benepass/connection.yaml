@@ -1,0 +1,4 @@
+name: benepass
+type: duckdb
+options:
+  filename: ../../../data/benepass.duckdb
