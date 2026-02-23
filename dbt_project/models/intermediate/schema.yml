@@ -7,24 +7,57 @@ models:
       Joins stg_transactions with stg_benefit_accounts and stg_employees.
     columns:
       - name: transaction_id
+        description: Unique transaction identifier
+        meta:
+          domain: benefits
         tests:
           - unique
           - not_null
       - name: employee_id
+        description: Employee who made the transaction
+        meta:
+          domain: people
         tests:
           - not_null
       - name: benefit_account_id
+        description: Benefit account charged
+        meta:
+          domain: benefits
         tests:
           - not_null
+      - name: merchant
+        description: Merchant name
+        meta:
+          domain: benefits
       - name: amount
+        description: Transaction amount in dollars
+        meta:
+          domain: benefits
         tests:
           - not_null
       - name: transaction_timestamp
+        description: Transaction timestamp normalized to UTC
+        meta:
+          domain: benefits
         tests:
           - not_null
+      - name: category
+        description: Merchant category
+        meta:
+          domain: benefits
       - name: benefit_type
         description: Benefit type from the associated account (null if account not found)
+        meta:
+          domain: benefits
       - name: employee_status
-        description: Employment status (null if employee not found)
+        description: Employment status from employee table (null if employee not found)
+        meta:
+          domain: people
+      - name: is_employee_terminated
+        description: Boolean flag — true if employee is terminated
+        meta:
+          domain: people
       - name: account_employee_id
         description: Employee ID on the benefit account — used for cross-employee detection
+        meta:
+          domain: quality

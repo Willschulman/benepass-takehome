@@ -7,7 +7,48 @@ sources:
     tables:
       - name: employees
         description: Employee master data
+        columns:
+          - name: employee_id
+            description: Unique employee identifier
+          - name: first_name
+            description: Employee first name (PII)
+          - name: last_name
+            description: Employee last name (PII)
+          - name: email
+            description: Employee email address (PII)
+          - name: hire_date
+            description: Date employee was hired
+          - name: status
+            description: Employment status (active/terminated)
       - name: benefit_accounts
         description: Benefit account assignments
+        columns:
+          - name: benefit_account_id
+            description: Unique benefit account identifier
+          - name: employee_id
+            description: Owning employee
+          - name: benefit_type
+            description: Type of benefit (wellness, wfh, meals, learning)
+          - name: program_name
+            description: Display name of benefit program
+          - name: monthly_allowance
+            description: Monthly dollar allowance
+          - name: current_balance
+            description: Remaining balance
       - name: transactions
         description: Benefit transaction records
+        columns:
+          - name: transaction_id
+            description: Unique transaction identifier
+          - name: employee_id
+            description: Employee who made the transaction
+          - name: benefit_account_id
+            description: Benefit account charged
+          - name: merchant
+            description: Merchant name
+          - name: amount
+            description: Transaction amount in dollars
+          - name: timestamp
+            description: Transaction timestamp (raw, pre-normalization)
+          - name: category
+            description: Merchant category
