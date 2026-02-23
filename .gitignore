@@ -222,3 +222,8 @@ infra/.terraform/
 infra/*.tfstate
 infra/*.tfstate.backup
 infra/.terraform.lock.hcl
+
+# Evidence
+evidence/node_modules/
+evidence/.evidence/
+evidence/build/
