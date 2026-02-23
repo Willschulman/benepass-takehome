@@ -1,4 +1,4 @@
-from dagster import Definitions, in_process_executor
+from dagster import Definitions, ScheduleDefinition, define_asset_job, in_process_executor
 from dagster_dbt import DbtCliResource
 
 from dagster_project.assets.dbt import benepass_dbt_assets, dbt_project
@@ -14,6 +14,13 @@ from dagster_project.checks.schema_drift import (
 )
 from dagster_project.constants import DUCKDB_PATH
 from dagster_project.resources.duckdb import DuckDBResource
+
+pipeline_job = define_asset_job("pipeline_job", selection="*")
+
+pipeline_schedule = ScheduleDefinition(
+    job=pipeline_job,
+    cron_schedule="0 6,14,22 * * *",
+)
 
 defs = Definitions(
     assets=[
@@ -32,6 +39,7 @@ defs = Definitions(
         quarantine_records_check,
         dq_flags_check,
     ],
+    schedules=[pipeline_schedule],
     resources={
         "duckdb": DuckDBResource(db_path=DUCKDB_PATH),
         "dbt": DbtCliResource(project_dir=dbt_project.project_dir),
