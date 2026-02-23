@@ -7,6 +7,13 @@ services:
     environment:
       - DAGSTER_HOME=/app/.dagster
 
+  evidence:
+    build: ./evidence
+    volumes:
+      - dagster_data:/data
+    depends_on:
+      - dagster
+
   caddy:
     image: caddy:2-alpine
     restart: unless-stopped
@@ -19,6 +26,7 @@ services:
       - caddy_config:/config
     depends_on:
       - dagster
+      - evidence
 
 volumes:
   dagster_data:

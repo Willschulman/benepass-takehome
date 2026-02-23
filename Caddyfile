@@ -9,5 +9,5 @@ benepass.wschulman.com {
     basicauth * {
         benepass $2a$14$X2NMv/ZCJasDE69zHDdzOOdgDCbPH9Ql1S/aGbDbZHRkH3.DONPPO
     }
-    respond "Dashboard coming soon" 200
+    reverse_proxy evidence:3000
 }
